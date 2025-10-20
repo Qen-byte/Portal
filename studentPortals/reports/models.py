@@ -9,6 +9,7 @@ class Student(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200)
     email = models.EmailField(unique=True)
+    gpa = models.FloatField(default=0)  # New field for GPA
 
     def __str__(self):
         return self.name
@@ -30,9 +31,51 @@ class Grade(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     score = models.IntegerField()
+    letter = models.CharField(max_length=2, blank=True)  # new field
+
+    def save(self, *args, **kwargs):
+        if self.score is not None:
+            self.score = int(self.score)
+        self.letter = self.get_letter_grade()
+        super().save(*args, **kwargs)
+
+    def get_letter_grade(self):
+        try:
+            score = int(self.score)
+        except (TypeError, ValueError):
+            return 'F'
+        if score >= 70:
+            return 'A'
+        elif score >= 60:
+            return 'B'
+        elif score >= 50:
+            return 'C'
+        elif score >= 40:
+            return 'D'
+        else:
+            return 'F'
+
+    
+    @property
+    def grade_point(self):
+        LETTER_POINTS = {
+            'A': 5,
+            'B': 4,
+            'C': 3,
+            'D': 2,
+            'F': 0,
+        }
+        return LETTER_POINTS.get(self.letter, 0)   
 
     def __str__(self):
-        return f"{self.student.name} - {self.course}: {self.score}"
+        return f"{self.student.name} - {self.course}: {self.score} ({self.letter})"
+    
+    @property
+    def np_status(self):
+        # Normal Progress if grade is A-D
+        if self.letter in ['A', 'B', 'C', 'D']:
+            return "NP"
+        return "BNP"  # Not in Normal Progress
 
 
 
@@ -53,6 +96,7 @@ class Profile(models.Model):
        ("lecturer", "Lecturer"),
        ("admin", "Admin"), 
     ])
+    courses = models.ManyToManyField('Course', blank=True, related_name='lecturer_profiles')
     name = models.CharField(max_length=100)
     student = models.OneToOneField(Student, null=True, blank=True, on_delete=models.SET_NULL)
 
