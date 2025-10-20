@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.contrib.auth.decorators import user_passes_test
 
 def student_required(user):
@@ -8,3 +9,15 @@ def lecturer_required(user):
 
 def admin_required(user):
     return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'admin'
+=======
+from django.contrib.auth.decorators import user_passes_test
+
+def student_required(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'student'
+
+def lecturer_required(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'lecturer'
+
+def admin_required(user):
+    return user.is_authenticated and hasattr(user, 'profile') and user.profile.role == 'admin'
+>>>>>>> bbc56343274ba21683d99fc68ba04072d741c2ff
