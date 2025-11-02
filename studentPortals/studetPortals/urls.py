@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 """
 URL configuration for studetPortals project.
 
@@ -24,7 +24,7 @@ urlpatterns = [
     path('reports/', include('reports.urls')),
     
 ]
-=======
+
 """
 URL configuration for studetPortals project.
 
@@ -50,4 +50,4 @@ urlpatterns = [
     path('reports/', include('reports.urls')),
     
 ]
->>>>>>> bbc56343274ba21683d99fc68ba04072d741c2ff
+

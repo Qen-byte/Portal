@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 {% extends "reports/admin_base.html" %}
 {% block content %}
 
@@ -40,15 +40,3 @@
 </div>
 
 {% endblock %}
-=======
-{% extends "reports/base.html" %}
-{% block content %}
-<h2>Edit Course: {{ course.name }}</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Changes</button>
-</form>
-<a href="{% url 'lecturer_dashboard' %}">Back to Dashboard</a>
-{% endblock %}
->>>>>>> bbc56343274ba21683d99fc68ba04072d741c2ff

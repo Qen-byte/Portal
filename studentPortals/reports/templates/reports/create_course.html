@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 {% extends "reports/base.html" %}
 {% block content %}
 
@@ -72,15 +72,3 @@
 </style>
 
 {% endblock %}
-=======
-{% extends "reports/base.html" %}
-{% block content %}
-<h2>Create Course</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Create</button>
-</form>
-<a href="{% url 'lecturer_dashboard' %}">Back to Dashboard</a>
-{% endblock %}
->>>>>>> bbc56343274ba21683d99fc68ba04072d741c2ff

@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 """
 WSGI config for studetPortals project.
 
@@ -15,7 +15,7 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'studetPortals.settings')
 
 application = get_wsgi_application()
-=======
+
 """
 WSGI config for studetPortals project.
 
@@ -32,4 +32,4 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'studetPortals.settings')
 
 application = get_wsgi_application()
->>>>>>> bbc56343274ba21683d99fc68ba04072d741c2ff
+

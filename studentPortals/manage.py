@@ -20,7 +20,7 @@ def main():
 
 if __name__ == '__main__':
     main()
-=======
+
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
 import os
@@ -43,4 +43,4 @@ def main():
 
 if __name__ == '__main__':
     main()
->>>>>>> bbc56343274ba21683d99fc68ba04072d741c2ff
+

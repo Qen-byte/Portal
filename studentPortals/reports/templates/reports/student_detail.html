@@ -2,120 +2,133 @@
 {% block content %}
 
 <style>
-    /* Sidebar Styling */
-    .sidebar {
-        height: 100%;
-        width: 0;
-        position: fixed;
-        top: 0;
-        left: 0;
-        background-color: #343a40;
-        overflow-x: hidden;
-        transition: 0.4s;
-        padding-top: 60px;
-        z-index: 1000;
-    }
-    .sidebar a {
-        padding: 12px 24px;
-        text-decoration: none;
-        font-size: 16px;
-        color: white;
-        display: block;
-        transition: 0.3s;
-    }
-    .sidebar a:hover {
-        background-color: #495057;
-    }
+/* --- Layout --- */
+.main-content {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+h1, h2 {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+hr {
+    margin: 15px 0;
+}
 
-    .open-btn {
-        font-size: 20px;
-        cursor: pointer;
-        background-color: #343a40;
-        color: white;
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        margin: 10px 0;
-    }
+/* --- Cards --- */
+.card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
 
-    .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 20px;
-        font-size: 25px;
-        color: white;
-        text-decoration: none;
-    }
+/* --- Tables --- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+th, td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+th {
+    background: #007bff;
+    color: white;
+}
+tr:hover {
+    background: #f1f1f1;
+}
 
-    .main-content {
-        transition: margin-left 0.4s;
-        padding: 20px;
-        margin-left: 0;
-    }
+/* --- Buttons --- */
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    margin: 2px 2px 2px 0;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+.btn-blue {
+    background: #17a2b8;
+    color: white;
+}
+.btn-blue:hover {
+    background: #138496;
+}
+.btn-green {
+    background: #28a745;
+    color: white;
+}
+.btn-green:hover {
+    background: #218838;
+}
+.btn-red {
+    background: #dc3545;
+    color: white;
+}
+.btn-red:hover {
+    background: #c82333;
+}
+.btn-warning {
+    background: #ffc107;
+    color: #212529;
+}
+.btn-warning:hover {
+    background: #e0a800;
+}
 
-    .logout-btn {
-        padding: 8px 14px;
-        background: #dc3545;
-        color: white;
-        border-radius: 5px;
-        text-decoration: none;
-        float: right;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    th, td {
-        padding: 8px;
-        border: 1px solid #ddd;
-    }
-    th {
-        background: #f2f2f2;
-    }
+/* --- Sidebar --- */
+.sidebar a {
+    color: white;
+    padding: 12px 20px;
+    display: block;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.sidebar a:hover {
+    background: #495057;
+}
+.open-btn {
+    font-size: 20px;
+    cursor: pointer;
+    background: #343a40;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+.logout-btn {
+    padding: 8px 14px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 </style>
 
-<!-- Sidebar -->
-<div id="sidebar" class="sidebar">
-    <a href="javascript:void(0)" class="close-btn" onclick="closeSidebar()">&times;</a>
-    <!--<a href="#dashboard">Dashboard</a>-->
-    <a href="#dashboard">Enrolled Courses</a>
-    <a href="#my-grades">My Grades</a>
-    <a href="#available-courses">View Available Courses</a>
-    
-    <div>
-        <button class="open-btn" onclick="openSidebar()"></button>
-
-        <form method="post" action="{% url 'logout' %}" style="display:inline;">
-            {% csrf_token %}
-            <button type="submit" class="logout-btn"
-                    style="padding:8px 14px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer;">
-                Logout
-            </button>
-        </form>
-    </div>
-
-</div>
-
-<!-- Top Bar -->
-<div>
-    <button class="open-btn" onclick="openSidebar()">☰ Menu</button>
-
-    <form method="post" action="{% url 'logout' %}" style="display:inline;">
+<!-- Top Bar / Sidebar Trigger -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <button class="open-btn" onclick="openSidebar()"></button>
+    <form method="post" action="{% url 'logout' %}">
         {% csrf_token %}
-        <button type="submit" class="logout-btn"
-                style="padding:8px 14px; background:#dc3545; color:white; border:none; border-radius:5px; cursor:pointer;">
-            Logout
-        </button>
+        <button type="submit" class="logout-btn">Logout</button>
     </form>
 </div>
 
-<div class="main-content" id="main">
+<div class="main-content">
     <h1>Welcome, {{ student.name }}!</h1>
     <hr>
 
-    <!-- Dashboard -->
-    <div id="dashboard">
+    <!-- Enrolled Courses -->
+    <div class="card">
         <h2>Enrolled Courses</h2>
         {% if enrolled_courses %}
         <table>
@@ -124,7 +137,7 @@
                 <th>Code</th>
                 <th>Lecturer</th>
                 <th>Credit Units</th>
-                <th>Action</th>
+                <th colspan="2">Actions</th>
             </tr>
             {% for course in enrolled_courses %}
             <tr>
@@ -132,15 +145,14 @@
                 <td>{{ course.code }}</td>
                 <td>{{ course.lecturer }}</td>
                 <td>{{ course.credit_units }}</td>
-                <td><a href="{% url 'add_review' course.id %}" class="btn btn-warning"> Review</a></td>
+                <td>
+                    <a href="{% url 'add_review' course.id %}" class="btn btn-warning">Add Review</a>
+                </td>
                 <td>
                     <form method="post" style="display:inline;">
                         {% csrf_token %}
                         <input type="hidden" name="course_id" value="{{ course.id }}">
-                        <button type="submit" 
-                            style="background:#dc3545; color:white; border:none; padding:5px 8px; border-radius:5px;">
-                            Unenroll
-                        </button>
+                        <button type="submit" class="btn btn-red">Unenroll</button>
                     </form>
                 </td>
             </tr>
@@ -149,20 +161,40 @@
         {% else %}
         <p>No enrolled courses yet.</p>
         {% endif %}
+    </div>
 
-        <h2 id="my-grades">My Grades</h2>
+    <!-- My Grades -->
+    <div class="card">
+        <h2>My Grades</h2>
         {% if grades %}
         <table>
             <tr>
+                <th>Code</th>
                 <th>Course</th>
                 <th>Score</th>
+                <th>CU</th>
+                <th>Grade</th>
+                <th>GP</th>
+                <th>Remarks</th>
             </tr>
             {% for grade in grades %}
             <tr>
+                <td>{{ grade.course.code }}</td>
                 <td>{{ grade.course.name }}</td>
                 <td>{{ grade.score }}</td>
+                <td>{{ grade.course.credit_units }}</td>
+                <td>{{ grade.letter|default:"-" }}</td>
+                <td>{{ grade.grade_point }}</td>
+                <td>{{ grade.np_status }}</td>
             </tr>
             {% endfor %}
+            <tr style="font-weight:bold; background:#f2f2f2; text-align:center;">
+                <td colspan="2">Semester Remarks: {{ semester_remark }}</td>
+                <td></td>
+                <td colspan="2">GPA: {{ gpa }}</td>
+                <td></td>
+                <td>CGPA: {{ cgpa }}</td>
+            </tr>
         </table>
         {% else %}
         <p>No grades available yet.</p>
@@ -170,7 +202,7 @@
     </div>
 
     <!-- Available Courses -->
-    <div id="available-courses" class="section">
+    <div class="card">
         <h2>Available Courses</h2>
         {% if available_courses %}
         <table>
@@ -186,13 +218,10 @@
                 <td>{{ course.code }}</td>
                 <td>{{ course.lecturer }}</td>
                 <td>
-                    <form method="post" style="display:inline;">
+                    <form method="post">
                         {% csrf_token %}
                         <input type="hidden" name="course_id" value="{{ course.id }}">
-                        <button type="submit"
-                            style="background:#28a745; color:white; border:none; padding:5px 8px; border-radius:5px;">
-                            Enroll
-                        </button>
+                        <button type="submit" class="btn btn-green">Enroll</button>
                     </form>
                 </td>
             </tr>
@@ -205,14 +234,14 @@
 </div>
 
 <script>
-    function openSidebar() {
-        document.getElementById("sidebar").style.width = "250px";
-        document.getElementById("main").style.marginLeft = "250px";
-    }
-    function closeSidebar() {
-        document.getElementById("sidebar").style.width = "0";
-        document.getElementById("main").style.marginLeft = "0";
-    }
+function openSidebar() {
+    document.getElementById("sidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+function closeSidebar() {
+    document.getElementById("sidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
 </script>
 
 {% endblock %}
